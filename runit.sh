@@ -1,2 +1,2 @@
-go build -o eee main.go
+go build -o exe.test main.go
 ./eee
