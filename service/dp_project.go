@@ -28,6 +28,6 @@ func UpdateProject(p *model.DpProject) (*model.DpProject, error) {
 
 func DeleteProject(id float64) error {
 	var dp model.DpProject
-	err := global.DB.Where("id = ?", id).Delete(&dp).Error
+	err := global.DB.Where("id = ?", id).Unscoped().Delete(&dp).Error
 	return err
 }

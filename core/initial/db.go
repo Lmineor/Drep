@@ -25,7 +25,7 @@ func GormMysql() *gorm.DB {
 		DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
 		SkipInitializeWithVersion: false, // 根据版本自动配置
 	}
-	if db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}); err != nil {
+	if db, err := gorm.Open(mysql.New(mysqlConfig)); err != nil {
 		global.LOG.Error("MySQL启动异常", zap.Any("err", err))
 		os.Exit(0)
 		return nil
@@ -40,7 +40,7 @@ func GormMysql() *gorm.DB {
 func MigrateTables(db *gorm.DB) {
 	err := db.AutoMigrate(
 		model.SysInvite{},
-		model.SysUser{},
+		//model.SysUser{},
 		model.SysAuthority{},
 		model.SysBaseMenu{},
 		model.SysBaseMenuParameter{},

@@ -18,8 +18,9 @@ func RegistryProject(c *gin.Context) {
 	dbPj, err := service.RegisterProject(&mPj)
 	if err != nil {
 		response.FailWithMessage("注册项目失败，请联系管理员", c)
+	} else {
+		response.OkWithDetailed(response.ProjectResponse{Project: dbPj}, "项目注册成功", c)
 	}
-	response.OkWithDetailed(response.ProjectResponse{Project: dbPj}, "项目注册成功", c)
 }
 
 func ListAllProjects(c *gin.Context) {
@@ -29,14 +30,14 @@ func ListAllProjects(c *gin.Context) {
 	list, total, err := service.ListAllProjects(pageNum, pageSize)
 	if err != nil {
 		response.FailWithMessage("failed to get all projects", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			PageSize: pageSize,
+			Page:     pageNum,
+		}, "获取成功", c)
 	}
-	response.OkWithDetailed(response.PageResult{
-		List:     list,
-		Total:    total,
-		PageSize: pageSize,
-		Page:     pageNum,
-	}, "获取成功", c)
-
 }
 
 func UpdateProject(c *gin.Context) {
@@ -46,8 +47,9 @@ func UpdateProject(c *gin.Context) {
 	if err != nil {
 		errMsg := fmt.Sprintf("更新项目失败，错误：%s", err)
 		response.FailWithMessage(errMsg, c)
+	} else {
+		response.OkWithDetailed(updatedPj, "更新成功", c)
 	}
-	response.OkWithDetailed(updatedPj, "更新成功", c)
 }
 
 func DeleteProject(c *gin.Context) {
@@ -62,6 +64,7 @@ func DeleteProject(c *gin.Context) {
 		errMsg := fmt.Sprintf("删除项目失败，错误：%s", err)
 		global.LOG.Info(errMsg)
 		response.FailWithMessage("删除项目失败", c)
+	} else {
+		response.Ok(c)
 	}
-	response.Ok(c)
 }

@@ -11,18 +11,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegistryProject(c *gin.Context) {
-	var pj request.Project
-	c.ShouldBindJSON(&pj)
-	mPj := model.DpProject{Name: pj.Name, Description: pj.Description}
-	dbPj, err := service.RegisterProject(&mPj)
+func CreateDailyReport(c *gin.Context) {
+
+	var dp request.Dp
+	c.ShouldBindJSON(&dp)
+	//if err := utils.Verify(dp, utils.DpVerify); err != nil {
+	//	response.FailWithMessage(err.Error(), c)
+	//	return
+	//}
+	userId := getUserID(c)
+	mDp := model.DpDp{Title: dp.Title, Content: dp.Content, ProjectID: dp.ProjectID, UserID: userId}
+	dbDp, err := service.CreateDailyReport(&mDp)
 	if err != nil {
-		response.FailWithMessage("注册项目失败，请联系管理员", c)
+		response.FailWithMessage("日报填写失败，请联系管理员", c)
+	} else {
+		response.OkWithDetailed(response.DpResponse{DailyReport: dbDp}, "日报填写成功", c)
 	}
-	response.OkWithDetailed(response.ProjectResponse{Project: dbPj}, "项目注册成功", c)
 }
 
-func ListAllProjects(c *gin.Context) {
+func ListAllDailyReport(c *gin.Context) {
 	var total int64
 	pageNum, pageSize := utils.ParsePaginateParams(c)
 
@@ -36,10 +43,9 @@ func ListAllProjects(c *gin.Context) {
 		PageSize: pageSize,
 		Page:     pageNum,
 	}, "获取成功", c)
-
 }
 
-func UpdateProject(c *gin.Context) {
+func UpdateDailyReport(c *gin.Context) {
 	var pj model.DpProject
 	c.ShouldBindJSON(&pj)
 	updatedPj, err := service.UpdateProject(&pj)
@@ -50,7 +56,7 @@ func UpdateProject(c *gin.Context) {
 	response.OkWithDetailed(updatedPj, "更新成功", c)
 }
 
-func DeleteProject(c *gin.Context) {
+func DeleteDailyReport(c *gin.Context) {
 	var reqId request.GetById
 	_ = c.ShouldBindJSON(&reqId)
 	if err := utils.Verify(reqId, utils.IdVerify); err != nil {

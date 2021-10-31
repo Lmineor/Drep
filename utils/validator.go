@@ -144,13 +144,8 @@ func Verify(st interface{}, roleMap Rules) (err error) {
 	return nil
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
-//@function: compareVerify
-//@description: 长度和数字的校验方法 根据类型自动校验
-//@param: value reflect.Value, VerifyStr string
-//@return: bool
-
 func compareVerify(value reflect.Value, VerifyStr string) bool {
+
 	switch value.Kind() {
 	case reflect.String, reflect.Slice, reflect.Array:
 		return compare(value.Len(), VerifyStr)

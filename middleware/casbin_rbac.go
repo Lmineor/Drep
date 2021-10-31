@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"github.com/drep/core/request"
 	"github.com/drep/core/response"
 	"github.com/drep/global"
@@ -20,8 +19,6 @@ func CasbinHandler() gin.HandlerFunc {
 		act := c.Request.Method
 		// 获取用户的角色
 		sub := waitUse.AuthorityId
-		subst := fmt.Sprintf("************%s", sub)
-		global.LOG.Info(subst)
 		e := service.Casbin()
 		// 判断策略中是否存在
 		success, _ := e.Enforce(sub, obj, act)

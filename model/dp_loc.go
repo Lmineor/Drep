@@ -11,3 +11,7 @@ type DpLoc struct {
 	ProjectID int       `json:"project_id" form:"project_id" gorm:"column:project_id;comment:项目id"`
 	Project   DpProject `json:"project"`
 }
+
+func (DpLoc) TableName() string {
+	return "dp_locs"
+}

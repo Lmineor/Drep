@@ -6,13 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitProjectRouter(Router *gin.RouterGroup) {
-	project := Router.Group("project").Use(middleware.OperationRecord())
+func InitDpRouter(Router *gin.RouterGroup) {
+	project := Router.Group("dp").Use(middleware.OperationRecord())
 	{
-		project.POST("registryProject", v1.RegistryProject) // 管理员创建项目
-		project.PUT("updateProject", v1.UpdateProject)
-		project.GET("listAllProjects", v1.ListAllProjects) // 管理员获取所有项目
-		project.DELETE("deleteProject", v1.DeleteProject)  // 管理员获取所有项目
+		project.POST("createDp", v1.CreateDailyReport) // 管理员创建项目
+		//project.PUT("updateProject", v1.UpdateProject)
+		//project.GET("listAllProjects", v1.ListAllProjects) // 管理员获取所有项目
+		//project.DELETE("deleteProject", v1.DeleteProject)  // 管理员获取所有项目
 		//UserRouter.POST("changePassword", v1.ChangePassword)     // 用户修改密码
 		//UserRouter.POST("getUserList", v1.GetUserList)           // 分页获取用户列表
 		//UserRouter.POST("setUserAuthority", v1.SetUserAuthority) // 设置用户权限
