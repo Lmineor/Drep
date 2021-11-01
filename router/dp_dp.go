@@ -7,9 +7,13 @@ import (
 )
 
 func InitDpRouter(Router *gin.RouterGroup) {
-	project := Router.Group("dp").Use(middleware.OperationRecord())
+	dp := Router.Group("dp").Use(middleware.OperationRecord())
 	{
-		project.POST("createDp", v1.CreateDailyReport) // 管理员创建项目
+		dp.POST("createDp", v1.CreateDailyReport) // 管理员创建项目
+		dp.PUT("updateDpDetail", v1.UpdateDailyReport)
+		dp.GET("listAllDps", v1.ListAllDailyReports) // 管理员获取所有项目
+		dp.GET("listDps", v1.ListDps)                // 用户获取自己的所有日报
+		dp.DELETE("deleteDp", v1.DeleteDailyReport)  // 管理员获取所有项目
 		//project.PUT("updateProject", v1.UpdateProject)
 		//project.GET("listAllProjects", v1.ListAllProjects) // 管理员获取所有项目
 		//project.DELETE("deleteProject", v1.DeleteProject)  // 管理员获取所有项目
