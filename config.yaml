@@ -10,7 +10,7 @@ system:
 
 # jwt configuration
 jwt:
-  signing-key: 'qmPlus'
+  signing-key: 'myKey'
   expires-time: 604800
   buffer-time: 86400
 
@@ -54,7 +54,6 @@ captcha:
   img-height: 80
 
 # mysql connect configuration
-# 未初始化之前请勿手动修改数据库信息！！！如果一定要手动初始化请看（https://www.gin-vue-admin.com/docs/first）
 mysql:
   path: '127.0.0.1'
   config: ''
@@ -69,55 +68,6 @@ mysql:
 # local configuration
 local:
   path: 'uploads/file'
-
-# autocode configuration
-autocode:
-  transfer-restart: true
-  root: ""
-  server: /server
-  server-api: /api/v1
-  server-initialize: /initialize
-  server-model: /model
-  server-request: /model/request/
-  server-router: /router
-  server-service: /service
-  web: /web/src
-  web-api: /api
-  web-flow: /view
-  web-form: /view
-  web-table: /view
-
-# qiniu configuration (请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址)
-qiniu:
-  zone: 'ZoneHuaDong'
-  bucket: ''
-  img-path: ''
-  use-https: false
-  access-key: ''
-  secret-key: ''
-  use-cdn-domains: false
-
-
-# aliyun oss configuration
-aliyun-oss:
-  endpoint: 'yourEndpoint'
-  access-key-id: 'yourAccessKeyId'
-  access-key-secret: 'yourAccessKeySecret'
-  bucket-name: 'yourBucketName'
-  bucket-url: 'yourBucketUrl'
-
-# tencent cos configuration
-tencent-cos:
-  bucket: 'xxxxx-10005608'
-  region: 'ap-shanghai'
-  secret-id: 'xxxxxxxx'
-  secret-key: 'xxxxxxxx'
-  base-url: 'https://gin.vue.admin'
-  path-prefix: 'gin-vue-admin'
-
-# excel configuration
-excel:
-  dir: './resource/excel/'
 
 
 # timer task db clear table
