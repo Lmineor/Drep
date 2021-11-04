@@ -5,9 +5,15 @@ import (
 	"github.com/drep/model"
 )
 
-func RegisterProject(p *model.DpProject) (*model.DpProject, error) {
+func CreateProject(p *model.DpProject) (*model.DpProject, error) {
 	err := global.DB.Create(p).Error
 	return p, err
+}
+
+func GetProjectDetail(uuid string) (*model.DpProject, error) {
+	var dp model.DpProject
+	err := global.DB.Where("uuid = ?", uuid).Find(&dp).Error
+	return &dp, err
 }
 
 func ListAllProjects(pageNum, pageSize int) (list interface{}, total int64, err error) {
@@ -22,12 +28,19 @@ func ListAllProjects(pageNum, pageSize int) (list interface{}, total int64, err 
 }
 
 func UpdateProject(p *model.DpProject) (*model.DpProject, error) {
-	err := global.DB.Updates(&p).Error
-	return p, err
+	var oldPj model.DpProject
+	err := global.DB.Where("uuid = ?", p.UUID).First(oldPj).Error
+	if err != nil {
+		return nil, err
+	}
+	oldPj.Name = p.Name
+	oldPj.Description = p.Description
+	global.DB.Save(oldPj)
+	return &oldPj, err
 }
 
-func DeleteProject(id float64) error {
+func DeleteProject(uuid string) error {
 	var dp model.DpProject
-	err := global.DB.Where("id = ?", id).Unscoped().Delete(&dp).Error
+	err := global.DB.Where("uuid = ?", uuid).Unscoped().Delete(&dp).Error
 	return err
 }

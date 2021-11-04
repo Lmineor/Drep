@@ -1,7 +1,7 @@
 package request
 
-
 type Project struct {
-	Name    string       `json:"name"`
+	UUID        string `json:"uuid"`
+	Name        string `json:"name"`
 	Description string `json:"description"`
 }

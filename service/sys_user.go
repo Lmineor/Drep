@@ -6,7 +6,6 @@ import (
 	"github.com/drep/global"
 	"github.com/drep/model"
 	"github.com/drep/utils"
-	guuid "github.com/google/uuid"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )
@@ -18,7 +17,7 @@ func Register(u model.SysUser) (err error, userInter model.SysUser) {
 	}
 	// 否则 附加uuid 密码md5简单加密 注册
 	u.Password = utils.MD5V([]byte(u.Password))
-	u.UUID = guuid.UUID(uuid.NewV4())
+	u.UUID = utils.GenerateUUID()
 	err = global.DB.Create(&u).Error
 	return err, u
 }
@@ -52,9 +51,9 @@ func SetUserAuthority(uuid uuid.UUID, authorityId string) (err error) {
 	return err
 }
 
-func DeleteUser(id float64) (err error) {
+func DeleteUser(uuid string) (err error) {
 	var user model.SysUser
-	err = global.DB.Where("id = ?", id).Delete(&user).Error
+	err = global.DB.Where("uuid = ?", uuid).Delete(&user).Error
 	return err
 }
 

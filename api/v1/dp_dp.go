@@ -25,6 +25,19 @@ func CreateDailyReport(c *gin.Context) {
 	}
 }
 
+func GetDpDetail(c *gin.Context) {
+	uuid := c.Param("uuid")
+	if uuid == "" {
+		response.FailWithMessage("未指定uuid", c)
+	}
+	dbDp, err := service.GetDailyReport(uuid)
+	if err != nil {
+		response.FailWithMessage("该日报不存在", c)
+	} else {
+		response.OkWithDetailed(response.DpResponse{DailyReport: dbDp}, "成功", c)
+	}
+}
+
 func ListAllDailyReports(c *gin.Context) {
 	var total int64
 	pageNum, pageSize := utils.ParsePaginateParams(c)
@@ -42,12 +55,12 @@ func ListAllDailyReports(c *gin.Context) {
 	}
 }
 
-// ListDailyReports list daily report according to the user id.
+// ListDps list daily report according to the user id.
 func ListDps(c *gin.Context) {
 	var total int64
 	pageNum, pageSize := utils.ParsePaginateParams(c)
-	userId := getUserID(c)
-	list, total, err := service.ListDps(userId, pageNum, pageSize)
+	userUUID := getUserUuid(c)
+	list, total, err := service.ListDps(userUUID, pageNum, pageSize)
 	if err != nil {
 		response.FailWithMessage("failed to get all projects", c)
 	} else {
@@ -63,6 +76,12 @@ func ListDps(c *gin.Context) {
 func UpdateDailyReport(c *gin.Context) {
 	var pj model.DpDp
 	c.ShouldBindJSON(&pj)
+	uuid := c.Param("uuid")
+	if uuid == "" {
+		response.FailWithMessage("错误：未指定uuid", c)
+		return
+	}
+	pj.UUID = uuid
 	updatedPj, err := service.UpdateDailyReport(&pj)
 	if err != nil {
 		errMsg := fmt.Sprintf("更新项目失败，错误：%s", err)
@@ -74,13 +93,8 @@ func UpdateDailyReport(c *gin.Context) {
 }
 
 func DeleteDailyReport(c *gin.Context) {
-	var reqId request.GetById
-	_ = c.ShouldBindJSON(&reqId)
-	if err := utils.Verify(reqId, utils.IdVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err := service.DeleteDailyReport(reqId.ID)
+	dpUUID := getStringUUIDFromPath(c)
+	err := service.DeleteDailyReport(dpUUID)
 	if err != nil {
 		errMsg := fmt.Sprintf("删除项目失败，错误：%s", err)
 		global.LOG.Info(errMsg)

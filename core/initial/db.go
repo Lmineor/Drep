@@ -40,7 +40,7 @@ func GormMysql() *gorm.DB {
 func MigrateTables(db *gorm.DB) {
 	err := db.AutoMigrate(
 		model.SysInvite{},
-		//model.SysUser{},
+		model.SysUser{},
 		model.SysAuthority{},
 		model.SysBaseMenu{},
 		model.SysBaseMenuParameter{},

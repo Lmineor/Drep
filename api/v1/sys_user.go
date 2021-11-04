@@ -8,7 +8,6 @@ import (
 	"github.com/drep/model"
 	"github.com/drep/service"
 	"github.com/drep/utils"
-	uuid "github.com/satori/go.uuid"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -42,7 +41,7 @@ func Login(c *gin.Context) {
 func tokenNext(c *gin.Context, user model.SysUser) {
 	j := &middleware.JWT{SigningKey: []byte(global.CONFIG.JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
-		UUID:        uuid.UUID(user.UUID),
+		UUID:        user.UUID,
 		ID:          user.ID,
 		NickName:    user.NickName,
 		Username:    user.Username,
@@ -179,18 +178,13 @@ func SetUserAuthority(c *gin.Context) {
 }
 
 func DeleteUser(c *gin.Context) {
-	var reqId request.GetById
-	_ = c.ShouldBindJSON(&reqId)
-	if err := utils.Verify(reqId, utils.IdVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	jwtId := getUserID(c)
-	if jwtId == uint(reqId.ID) {
+	userUUID := getStringUUIDFromPath(c)
+	jwtId := getUserUuid(c)
+	if jwtId == userUUID {
 		response.FailWithMessage("删除失败, 自杀失败", c)
 		return
 	}
-	if err := service.DeleteUser(reqId.ID); err != nil {
+	if err := service.DeleteUser(userUUID); err != nil {
 		global.LOG.Error("删除失败!", zap.Any("err", err))
 		response.FailWithMessage("删除失败", c)
 	} else {
@@ -231,7 +225,7 @@ func getUserUuid(c *gin.Context) string {
 		return ""
 	} else {
 		waitUse := claims.(*request.CustomClaims)
-		return waitUse.UUID.String()
+		return waitUse.UUID
 	}
 }
 

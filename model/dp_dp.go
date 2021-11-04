@@ -6,6 +6,7 @@ import (
 
 type DpDp struct {
 	global.MODEL
+	UUID      string    `json:"uuid" gorm:"comment:日报UUID"`
 	Title     string    `json:"title" gorm:"type:varchar(255);comment:日报标题"`
 	Content   string    `json:"context" gorm:"type:varchar(255);comment:日报内容"`
 	UserID    uint      `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`

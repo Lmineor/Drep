@@ -11,11 +11,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegistryProject(c *gin.Context) {
+func GetProjectDetail(c *gin.Context) {
+	uuid := c.Param("uuid")
+	if uuid == "" {
+		response.FailWithMessage("获取项目失败，请指定项目的uuid", c)
+		return
+	}
+	dbPj, err := service.GetProjectDetail(uuid)
+	if err != nil {
+		response.FailWithMessage("获取项目失败, 项目不存在", c)
+		return
+	}
+	response.OkWithDetailed(response.ProjectResponse{Project: dbPj}, "成功", c)
+}
+
+func CreateProject(c *gin.Context) {
 	var pj request.Project
 	c.ShouldBindJSON(&pj)
-	mPj := model.DpProject{Name: pj.Name, Description: pj.Description}
-	dbPj, err := service.RegisterProject(&mPj)
+	pj.UUID = utils.GenerateUUID()
+	global.LOG.Info(pj.UUID)
+	mPj := model.DpProject{Name: pj.Name, Description: pj.Description, UUID: pj.UUID}
+	dbPj, err := service.CreateProject(&mPj)
 	if err != nil {
 		response.FailWithMessage("注册项目失败，请联系管理员", c)
 	} else {
@@ -43,6 +59,12 @@ func ListAllProjects(c *gin.Context) {
 func UpdateProject(c *gin.Context) {
 	var pj model.DpProject
 	c.ShouldBindJSON(&pj)
+	uuid := c.Param("uuid")
+	if uuid == "" {
+		response.FailWithMessage("获取项目失败，请指定项目的uuid", c)
+		return
+	}
+	pj.UUID = uuid
 	updatedPj, err := service.UpdateProject(&pj)
 	if err != nil {
 		errMsg := fmt.Sprintf("更新项目失败，错误：%s", err)
@@ -53,13 +75,13 @@ func UpdateProject(c *gin.Context) {
 }
 
 func DeleteProject(c *gin.Context) {
-	var reqId request.GetById
+	var reqId request.GetByUUID
 	_ = c.ShouldBindJSON(&reqId)
 	if err := utils.Verify(reqId, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err := service.DeleteProject(reqId.ID)
+	err := service.DeleteProject(reqId.UUID)
 	if err != nil {
 		errMsg := fmt.Sprintf("删除项目失败，错误：%s", err)
 		global.LOG.Info(errMsg)
@@ -67,4 +89,9 @@ func DeleteProject(c *gin.Context) {
 	} else {
 		response.Ok(c)
 	}
+}
+
+func getStringUUIDFromPath(c *gin.Context) string {
+	uuid := c.Query("uuid")
+	return uuid
 }
