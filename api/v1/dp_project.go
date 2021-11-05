@@ -75,13 +75,12 @@ func UpdateProject(c *gin.Context) {
 }
 
 func DeleteProject(c *gin.Context) {
-	var reqId request.GetByUUID
-	_ = c.ShouldBindJSON(&reqId)
-	if err := utils.Verify(reqId, utils.IdVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err := service.DeleteProject(reqId.UUID)
+	uuid := c.Param("uuid")
+        if uuid == "" {
+                response.FailWithMessage("获取项目失败，请指定项目的uuid", c)
+                return
+        }
+	err := service.DeleteProject(uuid)
 	if err != nil {
 		errMsg := fmt.Sprintf("删除项目失败，错误：%s", err)
 		global.LOG.Info(errMsg)
