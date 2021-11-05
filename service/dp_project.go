@@ -11,8 +11,18 @@ func CreateProject(p *model.DpProject) (*model.DpProject, error) {
 }
 
 func GetProjectDetail(uuid string) (*model.DpProject, error) {
+	return GetProjectByUuid(uuid)
+}
+
+func GetProjectByUuid(uuid string) (*model.DpProject, error) {
 	var dp model.DpProject
 	err := global.DB.Where("uuid = ?", uuid).Find(&dp).Error
+	return &dp, err
+}
+
+func GetProjectById(id uint) (*model.DpProject, error) {
+	var dp model.DpProject
+	err := global.DB.Where("id = ?", id).Find(&dp).Error
 	return &dp, err
 }
 

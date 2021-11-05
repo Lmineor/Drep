@@ -16,5 +16,5 @@ var (
 	OldAuthorityVerify     = Rules{"OldAuthorityId": {NotEmpty()}}
 	ChangePasswordVerify   = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}, "NewPassword": {NotEmpty()}}
 	SetUserAuthorityVerify = Rules{"UUID": {NotEmpty()}, "AuthorityId": {NotEmpty()}}
-	DpVerify               = Rules{"Title": {NotEmpty()}, "Content": {NotEmpty()}, "ProjectID": {NotEmpty()}}
+	DpVerify               = Rules{"Title": {NotEmpty()}, "Content": {NotEmpty()}, "ProjectUUID": {NotEmpty()}}
 )

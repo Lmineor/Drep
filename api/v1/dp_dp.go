@@ -15,12 +15,18 @@ func CreateDailyReport(c *gin.Context) {
 
 	var dp request.Dp
 	c.ShouldBindJSON(&dp)
+
 	if err := utils.Verify(l, utils.DpVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+
 	userId := getUserID(c)
-	dbProject := service.GetProjectDetail(dp.UUID)
+	dbProject, err := service.GetProjectByUuid(db.UUID)
+	if err != nil{
+		response.FailWithMessage("项目uuid不存在", c)
+	}
+	
 	mDp := model.DpDp{Title: dp.Title, Content: dp.Content, ProjectID: dbProject.ID, UserID: userId}
 	dbDp, err := service.CreateDailyReport(&mDp)
 	if err != nil {
