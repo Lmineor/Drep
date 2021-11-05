@@ -15,8 +15,13 @@ func CreateDailyReport(c *gin.Context) {
 
 	var dp request.Dp
 	c.ShouldBindJSON(&dp)
+	if err := utils.Verify(l, utils.DpVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 	userId := getUserID(c)
-	mDp := model.DpDp{Title: dp.Title, Content: dp.Content, ProjectID: dp.ProjectID, UserID: userId}
+	dbProject := service.GetProjectDetail(dp.UUID)
+	mDp := model.DpDp{Title: dp.Title, Content: dp.Content, ProjectID: dbProject.ID, UserID: userId}
 	dbDp, err := service.CreateDailyReport(&mDp)
 	if err != nil {
 		response.FailWithMessage("日报填写失败，请联系管理员", c)
