@@ -1,5 +1,7 @@
 package utils
 
+import "time"
+
 func InOneDay(timeStr string) bool {
 	t, _ := time.ParseInLocation("2006-01-02 15:04:05", timeStr, time.Local)
 	unixTime := t.Unix()
@@ -13,8 +15,7 @@ func InOneDay(timeStr string) bool {
 
 func getMidNight0UnixTime() int64 {
 	timeStr := time.Now().Format("2006-01-02")
-	t, _ := time.Parse("2006-01-02", timeStr)
-	// Because Bj TimeZone is +8, so we sbutract 8hours
-	zeroTime := t.Unix() - 28800
+	t, _ := time.ParseInLocation("2006-01-02", timeStr, time.Local)
+	zeroTime := t.Unix()
 	return zeroTime
 }

@@ -41,6 +41,7 @@ func MigrateTables(db *gorm.DB) {
 	err := db.AutoMigrate(
 		model.SysInvite{},
 		model.SysUser{},
+		model.SysQuota{},
 		model.SysAuthority{},
 		model.SysBaseMenu{},
 		model.SysBaseMenuParameter{},

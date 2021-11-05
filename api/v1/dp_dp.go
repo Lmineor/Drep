@@ -16,18 +16,18 @@ func CreateDailyReport(c *gin.Context) {
 	var dp request.Dp
 	c.ShouldBindJSON(&dp)
 
-	if err := utils.Verify(l, utils.DpVerify); err != nil {
+	if err := utils.Verify(dp, utils.DpVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	userId := getUserID(c)
-	dbProject, err := service.GetProjectByUuid(db.UUID)
-	if err != nil{
+	dbProject, err := service.GetProjectByUuid(dp.ProjectUUID)
+	if err != nil {
 		response.FailWithMessage("项目uuid不存在", c)
 	}
-	
-	mDp := model.DpDp{Title: dp.Title, Content: dp.Content, ProjectID: dbProject.ID, UserID: userId}
+	uuid := utils.GenerateUUID()
+	mDp := model.DpDp{Title: dp.Title, Content: dp.Content, ProjectID: dbProject.ID, UserID: userId, UUID: uuid}
 	dbDp, err := service.CreateDailyReport(&mDp)
 	if err != nil {
 		response.FailWithMessage("日报填写失败，请联系管理员", c)
@@ -70,8 +70,8 @@ func ListAllDailyReports(c *gin.Context) {
 func ListDps(c *gin.Context) {
 	var total int64
 	pageNum, pageSize := utils.ParsePaginateParams(c)
-	userUUID := getUserUuid(c)
-	list, total, err := service.ListDps(userUUID, pageNum, pageSize)
+	userID := getUserID(c)
+	list, total, err := service.ListDps(userID, pageNum, pageSize)
 	if err != nil {
 		response.FailWithMessage("failed to get all projects", c)
 	} else {
@@ -85,15 +85,19 @@ func ListDps(c *gin.Context) {
 }
 
 func UpdateDailyReport(c *gin.Context) {
-	var pj model.DpDp
-	c.ShouldBindJSON(&pj)
+	var dp model.DpDp
+	c.ShouldBindJSON(&dp)
+	if err := utils.Verify(dp, utils.DpVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 	uuid := c.Param("uuid")
 	if uuid == "" {
 		response.FailWithMessage("错误：未指定uuid", c)
 		return
 	}
-	pj.UUID = uuid
-	updatedPj, err := service.UpdateDailyReport(&pj)
+	dp.UUID = uuid
+	updatedPj, err := service.UpdateDailyReport(&dp)
 	if err != nil {
 		errMsg := fmt.Sprintf("更新项目失败，错误：%s", err)
 		response.FailWithMessage(errMsg, c)
@@ -104,8 +108,12 @@ func UpdateDailyReport(c *gin.Context) {
 }
 
 func DeleteDailyReport(c *gin.Context) {
-	dpUUID := getStringUUIDFromPath(c)
-	err := service.DeleteDailyReport(dpUUID)
+	uuid := c.Param("uuid")
+	if uuid == "" {
+		response.FailWithMessage("请指定uuid", c)
+		return
+	}
+	err := service.DeleteDailyReport(uuid)
 	if err != nil {
 		errMsg := fmt.Sprintf("删除项目失败，错误：%s", err)
 		global.LOG.Info(errMsg)

@@ -32,11 +32,12 @@ func Routers() *gin.Engine {
 	PrivateGroup := Router.Group("")
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
 	{
+		router.InitAdminRouter(PrivateGroup)
 		router.InitJwtRouter(PrivateGroup)
 		router.InitProjectRouter(PrivateGroup)
 		router.InitDpRouter(PrivateGroup)
-		router.InitUserRouter(PrivateGroup)               // 注册用户路由
-		router.InitSysOperationRecordRouter(PrivateGroup) // 操作记录
+		router.InitUserRouter(PrivateGroup)
+		router.InitSysOperationRecordRouter(PrivateGroup)
 	}
 	global.LOG.Info("router register success")
 	return Router
