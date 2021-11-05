@@ -29,13 +29,13 @@ func ListAllProjects(pageNum, pageSize int) (list interface{}, total int64, err 
 
 func UpdateProject(p *model.DpProject) (*model.DpProject, error) {
 	var oldPj model.DpProject
-	err := global.DB.Where("uuid = ?", p.UUID).First(oldPj).Error
+	err := global.DB.Where("uuid = ?", p.UUID).First(&oldPj).Error
 	if err != nil {
 		return nil, err
 	}
 	oldPj.Name = p.Name
 	oldPj.Description = p.Description
-	global.DB.Save(oldPj)
+	global.DB.Save(&oldPj)
 	return &oldPj, err
 }
 
