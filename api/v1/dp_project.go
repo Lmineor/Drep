@@ -11,6 +11,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Tags Project
+// @Summary 项目详情
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"成功"}"
+// @Router /project/getProjectDetail [get]
 func GetProjectDetail(c *gin.Context) {
 	uuid := c.Param("uuid")
 	if uuid == "" {
@@ -25,6 +32,13 @@ func GetProjectDetail(c *gin.Context) {
 	response.OkWithDetailed(response.ProjectResponse{Project: dbPj}, "成功", c)
 }
 
+// @Tags 创建Project
+// @Summary 项目详情
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"项目注册成功"}"
+// @Router /project/createProject [post]
 func CreateProject(c *gin.Context) {
 	var pj request.Project
 	c.ShouldBindJSON(&pj)
@@ -39,6 +53,13 @@ func CreateProject(c *gin.Context) {
 	}
 }
 
+// @Tags listProject
+// @Summary 项目详情
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"项目注册成功"}"
+// @Router /project/listAllProjects [get]
 func ListAllProjects(c *gin.Context) {
 	var total int64
 	pageNum, pageSize := utils.ParsePaginateParams(c)
