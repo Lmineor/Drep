@@ -11,6 +11,14 @@ import (
 	"go.uber.org/zap"
 )
 
+// @Tags SysOperationRecord
+// @Summary 创建SysOperationRecord
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body system.SysOperationRecord true "创建SysOperationRecord"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /sysOperationRecord/createSysOperationRecord [post]
 func CreateSysOperationRecord(c *gin.Context) {
 	var sysOperationRecord model.SysOperationRecord
 	_ = c.ShouldBindJSON(&sysOperationRecord)
@@ -22,6 +30,14 @@ func CreateSysOperationRecord(c *gin.Context) {
 	}
 }
 
+// @Tags SysOperationRecord
+// @Summary 删除SysOperationRecord
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body system.SysOperationRecord true "SysOperationRecord模型"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Router /sysOperationRecord/deleteSysOperationRecord [delete]
 func DeleteSysOperationRecord(c *gin.Context) {
 	var sysOperationRecord model.SysOperationRecord
 	_ = c.ShouldBindJSON(&sysOperationRecord)
@@ -33,6 +49,14 @@ func DeleteSysOperationRecord(c *gin.Context) {
 	}
 }
 
+// @Tags SysOperationRecord
+// @Summary 批量删除SysOperationRecord
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body request.IdsReq true "批量删除SysOperationRecord"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
+// @Router /sysOperationRecord/deleteSysOperationRecordByIds [delete]
 func DeleteSysOperationRecordByIds(c *gin.Context) {
 	var IDS request.IdsReq
 	_ = c.ShouldBindJSON(&IDS)
@@ -44,7 +68,14 @@ func DeleteSysOperationRecordByIds(c *gin.Context) {
 	}
 }
 
-
+// @Tags SysOperationRecord
+// @Summary 用id查询SysOperationRecord
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body system.SysOperationRecord true "Id"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
+// @Router /sysOperationRecord/findSysOperationRecord [get]
 func FindSysOperationRecord(c *gin.Context) {
 	var sysOperationRecord model.SysOperationRecord
 	_ = c.ShouldBindQuery(&sysOperationRecord)
@@ -60,6 +91,14 @@ func FindSysOperationRecord(c *gin.Context) {
 	}
 }
 
+// @Tags SysOperationRecord
+// @Summary 分页获取SysOperationRecord列表
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body request.SysOperationRecordSearch true "页码, 每页大小, 搜索条件"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /sysOperationRecord/getSysOperationRecordList [get]
 func GetSysOperationRecordList(c *gin.Context) {
 	var pageInfo request.SysOperationRecordSearch
 	_ = c.ShouldBindQuery(&pageInfo)
