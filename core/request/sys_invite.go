@@ -1,7 +1,8 @@
 package request
 
-// User register structure
 type InviteCode struct {
-	Code        string `json:"code"`
-	AuthorityId string `json:"authority_id"`
+	ID          float64 `json:"id"`
+	InviteCode  string  `json:"invite_code"`
+	AuthorityId string  `json:"authority_id"`
+	Description string  `json:"description"`
 }

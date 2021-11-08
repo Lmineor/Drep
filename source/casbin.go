@@ -18,7 +18,8 @@ var carbines = []gormadapter.CasbinRule{
 	// superAdmin
 	{Ptype: "p", V0: "999", V1: "/admin/createInviteCode", V2: "POST"},
 	{Ptype: "p", V0: "999", V1: "/admin/listAllInviteCode", V2: "GET"},
-	{Ptype: "p", V0: "999", V1: "/admin/deleteInviteCode/:pathParam", V2: "DELETE"},
+	{Ptype: "p", V0: "999", V1: "/admin/deleteInviteCode", V2: "DELETE"},
+	{Ptype: "p", V0: "999", V1: "/admin/getInviteCodeById", V2: "GET"},
 
 	{Ptype: "p", V0: "999", V1: "/base/login", V2: "POST"},
 	{Ptype: "p", V0: "999", V1: "/base/register", V2: "POST"},

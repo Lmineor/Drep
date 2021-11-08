@@ -23,8 +23,8 @@ func Login(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	Captcha := true
-	if Captcha {
+	//if store.Verify(l.CaptchaId, l.Captcha, true) {
+	if true {
 		u := &model.SysUser{Username: l.Username, Password: l.Password}
 		if err, user := service.Login(u); err != nil {
 			global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))

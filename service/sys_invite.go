@@ -1,17 +1,44 @@
 package service
 
 import (
+	"fmt"
 	"github.com/drep/global"
 	"github.com/drep/model"
 )
 
-func CreateInviteCode(invite model.SysInvite) (*model.SysInvite, error) {
+func CreateInviteCode(invite *model.SysInvite) (*model.SysInvite, error) {
 	err := global.DB.Create(&invite).Error
-	return &invite, err
+	return invite, err
 }
 
-func DeleteInviteCode(id uint) (err error) {
+func UpdateInviteCodeById(id float64, invite *model.SysInvite) (*model.SysInvite, error) {
+	var oldInviteCode model.SysInvite
+	err := global.DB.Where("id = ?", id).First(&oldInviteCode).Error
+	if err != nil {
+		return nil, err
+	}
+	if invite.InviteCode != "" {
+		oldInviteCode.InviteCode = invite.InviteCode
+	}
+	if invite.AuthorityId != "" {
+		oldInviteCode.AuthorityId = invite.AuthorityId
+	}
+	if invite.Description != "" {
+		oldInviteCode.Description = invite.Description
+	}
+	global.DB.Save(&oldInviteCode)
+	return &oldInviteCode, err
+}
+func GetInviteCodeById(id float64) (*model.SysInvite, error) {
 	var inv model.SysInvite
+	err := global.DB.Where("id = ?", id).First(&inv).Error
+	return &inv, err
+}
+
+func DeleteInviteCode(id float64) (err error) {
+	var inv model.SysInvite
+	str := fmt.Sprintf("%f", id)
+	global.LOG.Info(str)
 	err = global.DB.Where("id = ?", id).Unscoped().Delete(&inv).Error
 	return err
 }

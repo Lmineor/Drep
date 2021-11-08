@@ -39,13 +39,20 @@ func GormMysql() *gorm.DB {
 
 func MigrateTables(db *gorm.DB) {
 	err := db.AutoMigrate(
-		model.SysInvite{},
 		model.SysUser{},
-		model.SysQuota{},
+		model.SysApi{},
+		model.SysInvite{},
 		model.SysAuthority{},
 		model.SysBaseMenu{},
 		model.SysBaseMenuParameter{},
 		model.JwtBlacklist{},
+		//model.SysDictionary{},
+		//model.SysDictionaryDetail{},
+		//model.ExaFileUploadAndDownload{},
+		//model.ExaFile{},
+		//model.ExaFileChunk{},
+		//model.ExaSimpleUploader{},
+		//model.ExaCustomer{},
 		model.SysOperationRecord{},
 		model.DpProject{},
 		model.DpDp{},

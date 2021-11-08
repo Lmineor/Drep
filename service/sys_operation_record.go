@@ -13,6 +13,7 @@ import (
 //@return: err error
 
 func CreateSysOperationRecord(sysOperationRecord model.SysOperationRecord) (err error) {
+	sysOperationRecord.Resp = ""
 	err = global.DB.Create(&sysOperationRecord).Error
 	return err
 }
