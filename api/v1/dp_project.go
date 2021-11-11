@@ -32,16 +32,9 @@ func GetProjectDetail(c *gin.Context) {
 	response.OkWithDetailed(response.ProjectResponse{Project: dbPj}, "成功", c)
 }
 
-// @Tags 创建Project
-// @Summary 项目详情
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"项目注册成功"}"
-// @Router /project/createProject [post]
 func CreateProject(c *gin.Context) {
 	var pj request.Project
-	c.ShouldBindJSON(&pj)
+	_ = c.ShouldBindJSON(&pj)
 	pj.UUID = utils.GenerateUUID()
 	global.LOG.Info(pj.UUID)
 	mPj := model.DpProject{Name: pj.Name, Description: pj.Description, UUID: pj.UUID}
@@ -53,13 +46,6 @@ func CreateProject(c *gin.Context) {
 	}
 }
 
-// @Tags listProject
-// @Summary 项目详情
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"项目注册成功"}"
-// @Router /project/listAllProjects [get]
 func ListAllProjects(c *gin.Context) {
 	var total int64
 	pageNum, pageSize := utils.ParsePaginateParams(c)
@@ -79,13 +65,11 @@ func ListAllProjects(c *gin.Context) {
 
 func UpdateProject(c *gin.Context) {
 	var pj model.DpProject
-	c.ShouldBindJSON(&pj)
-	uuid := c.Param("uuid")
-	if uuid == "" {
+	_ = c.ShouldBindJSON(&pj)
+	if pj.UUID == "" {
 		response.FailWithMessage("获取项目失败，请指定项目的uuid", c)
 		return
 	}
-	pj.UUID = uuid
 	updatedPj, err := service.UpdateProject(&pj)
 	if err != nil {
 		errMsg := fmt.Sprintf("更新项目失败，错误：%s", err)
@@ -96,7 +80,9 @@ func UpdateProject(c *gin.Context) {
 }
 
 func DeleteProject(c *gin.Context) {
-	uuid := c.Param("uuid")
+	var reqUuid request.GetByUUID
+	_ = c.ShouldBindQuery(&reqUuid)
+	uuid := reqUuid.UUID
 	if uuid == "" {
 		response.FailWithMessage("获取项目失败，请指定项目的uuid", c)
 		return

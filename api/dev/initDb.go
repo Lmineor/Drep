@@ -10,6 +10,7 @@ func InitDb(c *gin.Context) {
 	source.Casbin.Init()
 	source.BaseMenu.Init()
 	source.Authority.Init()
+	source.Admin.Init()
 	source.AuthorityMenu.Init()
 	source.AuthoritiesMenus.Init()
 }

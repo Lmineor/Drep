@@ -85,8 +85,9 @@ var apis = []model.SysApi{
 	{global.MODEL{ID: 83, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/excel/exportExcel", "导出excel", "excel", "POST"},
 	{global.MODEL{ID: 84, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/excel/downloadTemplate", "下载excel模板", "excel", "GET"},
 	{global.MODEL{ID: 85, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/api/deleteApisByIds", "批量删除api", "api", "DELETE"},
-	{global.MODEL{ID: 86, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/authority/createInviteCode", "创建邀请码", "authority", "POST"},
-	{global.MODEL{ID: 86, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/authority/deleteInviteCode", "删除邀请码", "authority", "DELETE"},
+	{global.MODEL{ID: 86, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/admin/createInviteCode", "创建邀请码", "authority", "POST"},
+	{global.MODEL{ID: 86, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/admin/deleteInviteCode", "删除邀请码", "authority", "DELETE"},
+	{global.MODEL{ID: 86, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/admin/updateInviteCodeById", "更新邀请码", "authority", "PUT"},
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

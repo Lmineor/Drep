@@ -17,16 +17,9 @@ func UpdateInviteCodeById(id float64, invite *model.SysInvite) (*model.SysInvite
 	if err != nil {
 		return nil, err
 	}
-	if invite.InviteCode != "" {
-		oldInviteCode.InviteCode = invite.InviteCode
-	}
-	if invite.AuthorityId != "" {
-		oldInviteCode.AuthorityId = invite.AuthorityId
-	}
 	if invite.Description != "" {
-		oldInviteCode.Description = invite.Description
+		err = global.DB.Model(&oldInviteCode).Update("description", invite.Description).Error
 	}
-	global.DB.Save(&oldInviteCode)
 	return &oldInviteCode, err
 }
 func GetInviteCodeById(id float64) (*model.SysInvite, error) {

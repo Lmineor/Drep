@@ -13,7 +13,7 @@ type GetById struct {
 
 // GetByUUID Find by uuid structure
 type GetByUUID struct {
-	UUID string `json:"uuid"`
+	UUID string `json:"uuid" form:"uuid"`
 }
 
 type IdsReq struct {

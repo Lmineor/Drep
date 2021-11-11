@@ -36,7 +36,9 @@ var menus = []model.SysBaseMenu{
 	{MODEL: global.MODEL{ID: 21, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, Hidden: false, ParentId: "9", Path: "simpleUploader", Name: "simpleUploader", Component: "view/example/simpleUploader/simpleUploader", Sort: 6, Meta: model.Meta{Title: "断点续传（插件版）", Icon: "upload"}},
 	{MODEL: global.MODEL{ID: 22, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, ParentId: "0", Path: "https://www.gin-vue-admin.com", Name: "https://www.gin-vue-admin.com", Hidden: false, Component: "/", Sort: 0, Meta: model.Meta{Title: "官方网站", Icon: "s-home"}},
 	{MODEL: global.MODEL{ID: 23, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, ParentId: "0", Path: "state", Name: "state", Hidden: false, Component: "view/system/state.vue", Sort: 6, Meta: model.Meta{Title: "服务器状态", Icon: "cloudy"}},
-	{MODEL: global.MODEL{ID: 24, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, Hidden: false, ParentId: "3", Path: "invite", Name: "invite", Component: "view/superAdmin/invite/invite.vue", Sort: 6, Meta: model.Meta{Title: "邀请码", Icon: "el-icon-connection"}},
+	{MODEL: global.MODEL{ID: 24, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, Hidden: false, ParentId: "3", Path: "invite", Name: "invite", Component: "view/superAdmin/invite/invite.vue", Sort: 6, Meta: model.Meta{Title: "邀请码", Icon: "connection"}},
+	{MODEL: global.MODEL{ID: 25, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, Hidden: false, ParentId: "3", Path: "project", Name: "project", Component: "view/superAdmin/project/project.vue", Sort: 8, Meta: model.Meta{Title: "项目", Icon: "s-open"}},
+	{MODEL: global.MODEL{ID: 26, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, Hidden: false, ParentId: "3", Path: "dailyreport", Name: "dailyreport", Component: "view/superAdmin/dailyreport/dailyreport.vue", Sort: 9, Meta: model.Meta{Title: "日报", Icon: "notebook-1"}},
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

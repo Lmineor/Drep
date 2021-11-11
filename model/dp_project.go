@@ -7,8 +7,8 @@ import (
 type DpProject struct {
 	global.MODEL
 	UUID        string `json:"uuid" gorm:"comment:项目UUID"`
-	Name        string `json:"name" gorm:"comment:项目名"`
-	Description string `json:"description" gorm:"comment:"项目简介"`
+	Name        string `json:"name" gorm:"unique;comment:项目名"`
+	Description string `json:"description" gorm:"comment:项目简介"`
 }
 
 func (DpProject) TableName() string {
