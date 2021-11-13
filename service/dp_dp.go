@@ -17,7 +17,7 @@ func ListAllDailyReports(pageNum, pageSize int) (list interface{}, total int64, 
 
 	db := global.DB.Model(&model.DpDp{})
 	err = db.Count(&total).Error
-	err = db.Limit(limit).Offset(offset).Find(&dpList).Error
+	err = db.Preload("User").Preload("Project").Limit(limit).Offset(offset).Find(&dpList).Error
 	return dpList, total, err
 }
 
@@ -28,7 +28,7 @@ func ListDps(userID uint, pageNum, pageSize int) (list interface{}, total int64,
 
 	db := global.DB.Model(&model.DpDp{})
 	err = db.Count(&total).Error
-	err = db.Limit(limit).Offset(offset).Where("user_id = ?", userID).Find(&dpList).Error
+	err = db.Preload("User").Preload("Project").Limit(limit).Offset(offset).Where("user_id = ?", userID).Find(&dpList).Error
 	return dpList, total, err
 }
 
@@ -52,6 +52,6 @@ func DeleteDailyReport(uuid string) error {
 
 func GetDailyReport(uuid string) (*model.DpDp, error) {
 	var dp model.DpDp
-	err := global.DB.Where("uuid = ?", uuid).First(&dp).Error
+	err := global.DB.Preload("User").Preload("Project").Where("uuid = ?", uuid).First(&dp).Error
 	return &dp, err
 }
