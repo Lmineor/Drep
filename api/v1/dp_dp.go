@@ -14,7 +14,7 @@ import (
 func CreateDailyReport(c *gin.Context) {
 
 	var dp request.Dp
-	c.ShouldBindJSON(&dp)
+	_ = c.ShouldBindJSON(&dp)
 
 	if err := utils.Verify(dp, utils.DpVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -37,9 +37,12 @@ func CreateDailyReport(c *gin.Context) {
 }
 
 func GetDpDetail(c *gin.Context) {
-	uuid := c.Param("uuid")
+	var reqUuid request.GetByUUID
+	_ = c.ShouldBindQuery(&reqUuid)
+	uuid := reqUuid.UUID
 	if uuid == "" {
 		response.FailWithMessage("未指定uuid", c)
+		return
 	}
 	dbDp, err := service.GetDailyReport(uuid)
 	if err != nil {
@@ -86,17 +89,11 @@ func ListDps(c *gin.Context) {
 
 func UpdateDailyReport(c *gin.Context) {
 	var dp model.DpDp
-	c.ShouldBindJSON(&dp)
+	_ = c.ShouldBindJSON(&dp)
 	if err := utils.Verify(dp, utils.DpVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	uuid := c.Param("uuid")
-	if uuid == "" {
-		response.FailWithMessage("错误：未指定uuid", c)
-		return
-	}
-	dp.UUID = uuid
 	updatedPj, err := service.UpdateDailyReport(&dp)
 	if err != nil {
 		errMsg := fmt.Sprintf("更新项目失败，错误：%s", err)
@@ -108,7 +105,9 @@ func UpdateDailyReport(c *gin.Context) {
 }
 
 func DeleteDailyReport(c *gin.Context) {
-	uuid := c.Param("uuid")
+	var reqUuid request.GetByUUID
+	_ = c.ShouldBindQuery(&reqUuid)
+	uuid := reqUuid.UUID
 	if uuid == "" {
 		response.FailWithMessage("请指定uuid", c)
 		return
