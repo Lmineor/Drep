@@ -13,8 +13,8 @@ var Admin = new(admin)
 type admin struct{}
 
 var admins = []model.SysUser{
-	{MODEL: global.MODEL{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, UUID: uuid.NewV4().String(), Username: "admin", Password: "e10adc3949ba59abbe56e057f20f883e", NickName: "超级管理员", HeaderImg: "http://qmplusimg.henrongyi.top/gva_header.jpg", AuthorityId: "100"},
-	{MODEL: global.MODEL{ID: 2, CreatedAt: time.Now(), UpdatedAt: time.Now()}, UUID: uuid.NewV4().String(), Username: "a303176530", Password: "e10adc3949ba59abbe56e057f20f883e", NickName: "QMPlusUser", HeaderImg: "http://qmplusimg.henrongyi.top/1572075907logo.png", AuthorityId: "9528"},
+	{MODEL: global.MODEL{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, UUID: uuid.NewV4().String(), Username: "admin", Password: "e10adc3949ba59abbe56e057f20f883e", NickName: "超级管理员", HeaderImg: "http://xxx/images/avatar.jpeg", AuthorityId: "100"},
+	{MODEL: global.MODEL{ID: 2, CreatedAt: time.Now(), UpdatedAt: time.Now()}, UUID: uuid.NewV4().String(), Username: "a303176530", Password: "e10adc3949ba59abbe56e057f20f883e", NickName: "QMPlusUser", HeaderImg: "http://xxx/images/avatar.jpeg", AuthorityId: "9528"},
 }
 
 func (a *admin) Init() error {
