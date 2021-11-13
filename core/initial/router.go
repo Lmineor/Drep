@@ -36,6 +36,7 @@ func Routers() *gin.Engine {
 		router.InitJwtRouter(PrivateGroup)
 		router.InitApiRouter(PrivateGroup)
 		router.InitProjectRouter(PrivateGroup)
+		router.InitSystemRouter(PrivateGroup)
 		router.InitMenuRouter(PrivateGroup)
 		router.InitCasbinRouter(PrivateGroup) // 权限相关路由
 		router.InitDpRouter(PrivateGroup)

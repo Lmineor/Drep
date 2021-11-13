@@ -19,8 +19,10 @@ require (
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.16.0 // indirect
 	github.com/satori/go.uuid v1.2.0
+	github.com/shirou/gopsutil v3.21.10+incompatible // indirect
 	github.com/spf13/viper v1.9.0
 	github.com/swaggo/gin-swagger v1.3.2
+	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	go.uber.org/zap v1.19.1
 	gorm.io/driver/mysql v1.1.3
 	gorm.io/gorm v1.21.15
