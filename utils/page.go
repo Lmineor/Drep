@@ -7,7 +7,7 @@ import (
 
 // ParsePaginateParams return pageNum and pageSize in the Gin.Context
 func ParsePaginateParams(c *gin.Context) (int, int) {
-	pageNum, err := strconv.Atoi(c.Query("pageNum"))
+	pageNum, err := strconv.Atoi(c.Query("page"))
 	if err != nil {
 		pageNum = 1
 	}
