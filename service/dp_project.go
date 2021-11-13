@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/drep/global"
 	"github.com/drep/model"
+	"gorm.io/gorm"
 )
 
 func CreateProject(p *model.DpProject) (*model.DpProject, error) {
@@ -16,7 +17,7 @@ func GetProjectDetail(uuid string) (*model.DpProject, error) {
 
 func GetProjectByUuid(uuid string) (*model.DpProject, error) {
 	var dp model.DpProject
-	err := global.DB.Where("uuid = ?", uuid).Find(&dp).Error
+	err := global.DB.Preload("User").Where("uuid = ?", uuid).Find(&dp).Error
 	return &dp, err
 }
 
@@ -33,7 +34,10 @@ func ListAllProjects(pageNum, pageSize int) (list interface{}, total int64, err 
 
 	db := global.DB.Model(&model.DpProject{})
 	err = db.Count(&total).Error
-	err = db.Limit(limit).Offset(offset).Find(&projectList).Error
+	// TODO: solve this omit func.
+	err = db.Limit(limit).Offset(offset).Preload("User", func(db *gorm.DB) *gorm.DB {
+		return db.Omit("sys_users.header_img")
+	}).Find(&projectList).Error
 	return projectList, total, err
 }
 

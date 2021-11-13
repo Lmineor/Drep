@@ -19,13 +19,16 @@ import (
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"成功"}"
 // @Router /project/getProjectDetail [get]
 func GetProjectDetail(c *gin.Context) {
-	uuid := c.Param("uuid")
+	var reqUuid request.GetByUUID
+	_ = c.ShouldBindQuery(&reqUuid)
+	uuid := reqUuid.UUID
 	if uuid == "" {
 		response.FailWithMessage("获取项目失败，请指定项目的uuid", c)
 		return
 	}
 	dbPj, err := service.GetProjectDetail(uuid)
 	if err != nil {
+		global.LOG.Info(fmt.Sprintf("error from db is: %s", err))
 		response.FailWithMessage("获取项目失败, 项目不存在", c)
 		return
 	}
@@ -36,8 +39,8 @@ func CreateProject(c *gin.Context) {
 	var pj request.Project
 	_ = c.ShouldBindJSON(&pj)
 	pj.UUID = utils.GenerateUUID()
-	global.LOG.Info(pj.UUID)
-	mPj := model.DpProject{Name: pj.Name, Description: pj.Description, UUID: pj.UUID}
+	userId := getUserID(c)
+	mPj := model.DpProject{Name: pj.Name, Description: pj.Description, UUID: pj.UUID, UserID: userId}
 	dbPj, err := service.CreateProject(&mPj)
 	if err != nil {
 		response.FailWithMessage("注册项目失败，请联系管理员", c)
