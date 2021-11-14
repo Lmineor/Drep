@@ -69,6 +69,24 @@ func ListAllDailyReports(c *gin.Context) {
 	}
 }
 
+func ListAllDailyReportsUnderAdmin(c *gin.Context) {
+	var total int64
+	adminId := getUserID(c)
+	pageNum, pageSize := utils.ParsePaginateParams(c)
+
+	list, total, err := service.ListAllDailyReportsUnderAdmin(adminId, pageNum, pageSize)
+	if err != nil {
+		response.FailWithMessage("failed to get all projects", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			PageSize: pageSize,
+			Page:     pageNum,
+		}, "获取成功", c)
+	}
+}
+
 // ListDps list daily report according to the user id.
 func ListDps(c *gin.Context) {
 	var total int64

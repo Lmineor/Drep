@@ -21,6 +21,17 @@ func ListAllDailyReports(pageNum, pageSize int) (list interface{}, total int64, 
 	return dpList, total, err
 }
 
+func ListAllDailyReportsUnderAdmin(adminId uint, pageNum, pageSize int) (list interface{}, total int64, err error) {
+	var dpList []model.SysAdminDpMaps
+	limit := pageSize
+	offset := (pageNum - 1) * limit
+
+	db := global.DB.Model(&model.SysAdminDpMaps{}).Where("user_id = ?", adminId)
+	err = db.Count(&total).Error
+	err = db.Limit(limit).Offset(offset).Find(&dpList).Error
+	return dpList, total, err
+}
+
 func ListDps(userID uint, pageNum, pageSize int) (list interface{}, total int64, err error) {
 	var dpList []model.DpDp
 	limit := pageSize
