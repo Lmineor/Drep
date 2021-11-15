@@ -43,6 +43,7 @@ func Routers() *gin.Engine {
 		router.InitUserRouter(PrivateGroup)
 		router.InitAuthorityRouter(PrivateGroup)
 		router.InitSysOperationRecordRouter(PrivateGroup)
+		router.InitFileUploadAndDownloadRouter(PrivateGroup) // 文件上传下载功能路由
 	}
 	global.LOG.Info("router register success")
 	return Router

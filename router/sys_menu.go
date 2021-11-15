@@ -9,8 +9,8 @@ import (
 func InitMenuRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 	MenuRouter := Router.Group("menu").Use(middleware.OperationRecord())
 	{
-		MenuRouter.POST("getMenu", v1.GetMenu)                   // 获取菜单树
-		MenuRouter.POST("getMenuList", v1.GetMenuList)           // 分页获取基础menu列表
+		MenuRouter.GET("getMenu", v1.GetMenu)                    // 获取菜单树
+		MenuRouter.GET("getMenuList", v1.GetMenuList)            // 分页获取基础menu列表
 		MenuRouter.POST("addBaseMenu", v1.AddBaseMenu)           // 新增菜单
 		MenuRouter.POST("getBaseMenuTree", v1.GetBaseMenuTree)   // 获取用户动态路由
 		MenuRouter.POST("addMenuAuthority", v1.AddMenuAuthority) //	增加menu和角色关联关系

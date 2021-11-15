@@ -70,14 +70,14 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/dp/listDps", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/dp/getDpDetail", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/dp/updateDpDetail", V2: "PUT"},
-	{Ptype: "p", V0: "100", V1: "/dp/deleteDp/:pathParam", V2: "DELETE"},
+	{Ptype: "p", V0: "100", V1: "/dp/deleteDp", V2: "DELETE"},
 
 	// admin
 	{Ptype: "p", V0: "1001", V1: "/base/login", V2: "POST"},
 	{Ptype: "p", V0: "1001", V1: "/base/register", V2: "POST"},
 
 	{Ptype: "p", V0: "1001", V1: "/project/createProject", V2: "POST"},
-	{Ptype: "p", V0: "1001", V1: "/project/getProjectDetail/:pathParam", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/project/getProjectDetail", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/project/listProjects", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/project/updateProject", V2: "PUT"},
 	{Ptype: "p", V0: "1001", V1: "/project/deleteProject", V2: "DELETE"},
@@ -90,20 +90,20 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "1001", V1: "/dp/deleteDp", V2: "DELETE"},
 
 	// user
-	{Ptype: "p", V0: "777", V1: "/base/login", V2: "POST"},
-	{Ptype: "p", V0: "777", V1: "/base/register", V2: "POST"},
+	{Ptype: "p", V0: "888", V1: "/base/login", V2: "POST"},
+	{Ptype: "p", V0: "888", V1: "/base/register", V2: "POST"},
 
-	{Ptype: "p", V0: "777", V1: "/dp/createDp", V2: "POST"},
-	{Ptype: "p", V0: "777", V1: "/dp/listDps", V2: "GET"},
-	{Ptype: "p", V0: "777", V1: "/dp/getDpDetail", V2: "GET"},
-	{Ptype: "p", V0: "777", V1: "/dp/updateDpDetail", V2: "PUT"},
-	{Ptype: "p", V0: "777", V1: "/dp/deleteDp", V2: "DELETE"},
+	{Ptype: "p", V0: "888", V1: "/dp/createDp", V2: "POST"},
+	{Ptype: "p", V0: "888", V1: "/dp/listDps", V2: "GET"},
+	{Ptype: "p", V0: "888", V1: "/dp/getDpDetail", V2: "GET"},
+	{Ptype: "p", V0: "888", V1: "/dp/updateDpDetail", V2: "PUT"},
+	{Ptype: "p", V0: "888", V1: "/dp/deleteDp", V2: "DELETE"},
 }
 
 func (c *casbin) Init() error {
 	_ = global.DB.AutoMigrate(gormadapter.CasbinRule{})
 	return global.DB.Transaction(func(tx *gorm.DB) error {
-		if tx.Find(&[]gormadapter.CasbinRule{}).RowsAffected == 154 {
+		if tx.Find(&[]gormadapter.CasbinRule{}).RowsAffected == 67 {
 			global.LOG.Error("[Mysql] --> casbin_rule 表的初始数据已存在!")
 			return nil
 		}

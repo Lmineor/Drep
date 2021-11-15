@@ -13,6 +13,7 @@ func InitProjectRouter(Router *gin.RouterGroup) {
 		project.GET("getProjectDetail", v1.GetProjectDetail)
 		project.PUT("updateProject", v1.UpdateProject)
 		project.GET("listAllProjects", v1.ListAllProjects) // 管理员获取所有项目
-		project.DELETE("deleteProject", v1.DeleteProject)  // 管理员获取所有项目
+		project.GET("listProjects", v1.ListProjects)
+		project.DELETE("deleteProject", v1.DeleteProject)
 	}
 }

@@ -27,6 +27,20 @@ func GetProjectById(id uint) (*model.DpProject, error) {
 	return &dp, err
 }
 
+func ListProjects(userId uint, pageNum, pageSize int) (list interface{}, total int64, err error) {
+	var projectList []model.DpProject
+	limit := pageSize
+	offset := (pageNum - 1) * limit
+
+	db := global.DB.Model(&model.DpProject{}).Where("user_id = ?", userId)
+	err = db.Count(&total).Error
+	// TODO: solve this omit func.
+	err = db.Limit(limit).Offset(offset).Preload("User", func(db *gorm.DB) *gorm.DB {
+		return db.Omit("sys_users.header_img")
+	}).Find(&projectList).Error
+	return projectList, total, err
+}
+
 func ListAllProjects(pageNum, pageSize int) (list interface{}, total int64, err error) {
 	var projectList []model.DpProject
 	limit := pageSize

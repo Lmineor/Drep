@@ -66,6 +66,23 @@ func ListAllProjects(c *gin.Context) {
 	}
 }
 
+func ListProjects(c *gin.Context) {
+	var total int64
+	pageNum, pageSize := utils.ParsePaginateParams(c)
+	userId := getUserID(c)
+	list, total, err := service.ListProjects(userId, pageNum, pageSize)
+	if err != nil {
+		response.FailWithMessage("failed to get all projects", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			PageSize: pageSize,
+			Page:     pageNum,
+		}, "获取成功", c)
+	}
+}
+
 func UpdateProject(c *gin.Context) {
 	var pj model.DpProject
 	_ = c.ShouldBindJSON(&pj)
