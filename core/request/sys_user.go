@@ -7,9 +7,9 @@ type Register struct {
 	Username    string `json:"userName"`
 	Password    string `json:"passWord"`
 	NickName    string `json:"nickName" gorm:"default:'QMPlusUser'"`
-	HeaderImg   string `json:"headerImg" gorm:"default:'http://www.henrongyi.top/avatar/lufu.jpg'"`
+	HeaderImg   string `json:"headerImg" gorm:"default:'http://101.200.193.47/images/avatar.jpeg'"`
 	AuthorityId string `json:"authorityId" gorm:"default:888"`
-	InviteCode string `json:"inviteCode" gorm:"-"`
+	InviteCode  string `json:"inviteCode" gorm:"-"`
 }
 
 // User login structure

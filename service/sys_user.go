@@ -36,7 +36,17 @@ func ChangePassword(u *model.SysUser, newPassword string) (err error, userInter 
 	return err, u
 }
 
-func GetUserInfoList(info request.PageInfo) (err error, list interface{}, total int64) {
+func GetUserInfoList(currentUserId uint, info request.PageInfo) (err error, list interface{}, total int64) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	db := global.DB.Model(&model.SysUser{}).Where("parent_id = ?", currentUserId)
+	var userList []model.SysUser
+	err = db.Count(&total).Error
+	err = db.Limit(limit).Offset(offset).Preload("Authority").Find(&userList).Error
+	return err, userList, total
+}
+
+func GetAllUserInfoList(info request.PageInfo) (err error, list interface{}, total int64) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&model.SysUser{})

@@ -103,7 +103,10 @@ func tokenNext(c *gin.Context, user model.SysUser) {
 func Register(c *gin.Context) {
 	var r request.Register
 	_ = c.ShouldBindJSON(&r)
-
+	if r.AuthorityId == "" {
+		r.AuthorityId = "888"
+	}
+	parentId := getUserID(c)
 	if global.CONFIG.System.UseInviteCode {
 		err := service.VerifyInviteCode(r.InviteCode, r.AuthorityId)
 		if err != nil {
@@ -116,7 +119,7 @@ func Register(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	user := &model.SysUser{Username: r.Username, NickName: r.NickName, Password: r.Password, HeaderImg: r.HeaderImg, AuthorityId: r.AuthorityId}
+	user := &model.SysUser{Username: r.Username, NickName: r.NickName, Password: r.Password, HeaderImg: r.HeaderImg, AuthorityId: r.AuthorityId, ParentId: parentId}
 	err, userReturn := service.Register(*user)
 	if err != nil {
 		global.LOG.Error("注册失败!", zap.Any("err", err))
@@ -144,12 +147,32 @@ func ChangePassword(c *gin.Context) {
 
 func GetUserList(c *gin.Context) {
 	var pageInfo request.PageInfo
-	_ = c.ShouldBindJSON(&pageInfo)
+	_ = c.ShouldBindQuery(&pageInfo)
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err, list, total := service.GetUserInfoList(pageInfo); err != nil {
+	currentUserId := getUserID(c)
+	if err, list, total := service.GetUserInfoList(currentUserId, pageInfo); err != nil {
+		global.LOG.Error("获取失败!", zap.Any("err", err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
+	}
+}
+func GetAllUserList(c *gin.Context) {
+	var pageInfo request.PageInfo
+	_ = c.ShouldBindQuery(&pageInfo)
+	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if err, list, total := service.GetAllUserInfoList(pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
