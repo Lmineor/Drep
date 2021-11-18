@@ -15,5 +15,6 @@ func InitProjectRouter(Router *gin.RouterGroup) {
 		project.GET("listAllProjects", v1.ListAllProjects) // 管理员获取所有项目
 		project.GET("listProjects", v1.ListProjects)
 		project.DELETE("deleteProject", v1.DeleteProject)
+		project.DELETE("deleteProjectByUUIDs", v1.DeleteProjectByUUIDs)
 	}
 }

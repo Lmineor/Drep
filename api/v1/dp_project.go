@@ -9,6 +9,7 @@ import (
 	"github.com/drep/service"
 	"github.com/drep/utils"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 // @Tags Project
@@ -111,6 +112,23 @@ func DeleteProject(c *gin.Context) {
 	if err != nil {
 		errMsg := fmt.Sprintf("删除项目失败，错误：%s", err)
 		global.LOG.Info(errMsg)
+		response.FailWithMessage("删除项目失败", c)
+	} else {
+		response.Ok(c)
+	}
+}
+
+func DeleteProjectByUUIDs(c *gin.Context) {
+	var reqUuids request.UuidsReq
+	_ = c.ShouldBindJSON(&reqUuids)
+	uuids := reqUuids.Uuids
+	if len(uuids) == 0 {
+		response.FailWithMessage("删除项目失败，请指定项目的uuid", c)
+		return
+	}
+	err := service.DeleteProjectByUUIDs(uuids)
+	if err != nil {
+		global.LOG.Info("删除项目失败，错误", zap.Any("err: ", err))
 		response.FailWithMessage("删除项目失败", c)
 	} else {
 		response.Ok(c)

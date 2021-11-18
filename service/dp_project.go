@@ -72,3 +72,8 @@ func DeleteProject(uuid string) error {
 	err := global.DB.Where("uuid = ?", uuid).Unscoped().Delete(&dp).Error
 	return err
 }
+
+func DeleteProjectByUUIDs(uuids []string) error {
+	err := global.DB.Delete(&[]model.DpProject{}, "uuid in ?", uuids).Error
+	return err
+}
