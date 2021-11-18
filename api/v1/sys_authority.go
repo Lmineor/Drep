@@ -119,7 +119,7 @@ func UpdateAuthority(c *gin.Context) {
 // @Router /authority/getAuthorityList [post]
 func GetAuthorityList(c *gin.Context) {
 	var pageInfo request.PageInfo
-	_ = c.ShouldBindJSON(&pageInfo)
+	_ = c.ShouldBindQuery(&pageInfo)
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

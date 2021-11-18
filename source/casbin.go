@@ -29,15 +29,15 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/api/getAllApis", V2: "POST"},
 	{Ptype: "p", V0: "100", V1: "/api/deleteApisByIds", V2: "DELETE"},
 
-	{Ptype: "p", V0: "100", V1: "/menu/getMenu", V2: "POST"},
-	{Ptype: "p", V0: "100", V1: "/menu/getMenuList", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/menu/getMenu", V2: "GET"},
+	{Ptype: "p", V0: "100", V1: "/menu/getMenuList", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/menu/addBaseMenu", V2: "POST"},
-	{Ptype: "p", V0: "100", V1: "/menu/getBaseMenuTree", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/menu/getBaseMenuTree", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/menu/addMenuAuthority", V2: "POST"},
-	{Ptype: "p", V0: "100", V1: "/menu/getMenuAuthority", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/menu/getMenuAuthority", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/menu/deleteBaseMenu", V2: "POST"},
 	{Ptype: "p", V0: "100", V1: "/menu/updateBaseMenu", V2: "POST"},
-	{Ptype: "p", V0: "100", V1: "/menu/getBaseMenuById", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/menu/getBaseMenuById", V2: "GET"},
 
 	{Ptype: "p", V0: "100", V1: "/casbin/updateCasbin", V2: "POST"},
 	{Ptype: "p", V0: "100", V1: "/casbin/getPolicyPathByAuthorityId", V2: "POST"},
@@ -46,7 +46,7 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/authority/deleteAuthority", V2: "POST"},
 	{Ptype: "p", V0: "100", V1: "/authority/updateAuthority", V2: "PUT"},
 	{Ptype: "p", V0: "100", V1: "/authority/copyAuthority", V2: "POST"},
-	{Ptype: "p", V0: "100", V1: "/authority/getAuthorityList", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/authority/getAuthorityList", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/authority/setDataAuthority", V2: "POST"},
 
 	{Ptype: "p", V0: "100", V1: "/sysOperationRecord/createSysOperationRecord", V2: "POST"},
@@ -56,7 +56,13 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/sysOperationRecord/getSysOperationRecordList", V2: "GET"},
 
 	{Ptype: "p", V0: "100", V1: "/base/login", V2: "POST"},
-	{Ptype: "p", V0: "100", V1: "/base/register", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/user/register", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/user/getUserList", V2: "GET"},
+	{Ptype: "p", V0: "100", V1: "/user/getAllUserList", V2: "GET"},
+	{Ptype: "p", V0: "100", V1: "/user/deleteUser", V2: "GET"},
+	{Ptype: "p", V0: "100", V1: "/user/setUserInfo", V2: "PUT"},
+
+	{Ptype: "p", V0: "100", V1: "/jwt/jsonInBlacklist", V2: "POST"},
 
 	{Ptype: "p", V0: "100", V1: "/project/listAllProjects", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/project/createProject", V2: "POST"},
@@ -74,24 +80,44 @@ var carbines = []gormadapter.CasbinRule{
 
 	// admin
 	{Ptype: "p", V0: "1001", V1: "/base/login", V2: "POST"},
-	{Ptype: "p", V0: "1001", V1: "/base/register", V2: "POST"},
+
+	{Ptype: "p", V0: "1001", V1: "/menu/getMenu", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/menu/getMenuList", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/menu/addBaseMenu", V2: "POST"},
+	{Ptype: "p", V0: "1001", V1: "/menu/getBaseMenuTree", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/menu/addMenuAuthority", V2: "POST"},
+	{Ptype: "p", V0: "1001", V1: "/menu/getMenuAuthority", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/menu/deleteBaseMenu", V2: "POST"},
+	{Ptype: "p", V0: "1001", V1: "/menu/updateBaseMenu", V2: "POST"},
+	{Ptype: "p", V0: "1001", V1: "/menu/getBaseMenuById", V2: "GET"},
+
+	{Ptype: "p", V0: "1001", V1: "/user/register", V2: "POST"},
+	{Ptype: "p", V0: "1001", V1: "/user/getUserList", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/user/deleteUser", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/user/setUserInfo", V2: "PUT"},
+
+	{Ptype: "p", V0: "1001", V1: "/jwt/jsonInBlacklist", V2: "POST"},
 
 	{Ptype: "p", V0: "1001", V1: "/project/createProject", V2: "POST"},
 	{Ptype: "p", V0: "1001", V1: "/project/getProjectDetail", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/project/listProjects", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/project/updateProject", V2: "PUT"},
 	{Ptype: "p", V0: "1001", V1: "/project/deleteProject", V2: "DELETE"},
+	{Ptype: "p", V0: "1001", V1: "/project/deleteProjectByUUIDs", V2: "DELETE"},
 
-	{Ptype: "p", V0: "1001", V1: "/dp/listAllDps", V2: "GET"},
+	{Ptype: "p", V0: "1001", V1: "/dp/listAllDpsWithSuperUser", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/dp/createDp", V2: "POST"},
 	{Ptype: "p", V0: "1001", V1: "/dp/listDps", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/dp/getDpDetail", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/dp/updateDpDetail", V2: "PUT"},
 	{Ptype: "p", V0: "1001", V1: "/dp/deleteDp", V2: "DELETE"},
+	{Ptype: "p", V0: "1001", V1: "/dp/deleteDpByUUIDs", V2: "DELETE"},
 
 	// user
 	{Ptype: "p", V0: "888", V1: "/base/login", V2: "POST"},
-	{Ptype: "p", V0: "888", V1: "/base/register", V2: "POST"},
+	{Ptype: "p", V0: "888", V1: "/user/setUserInfo", V2: "PUT"},
+
+	{Ptype: "p", V0: "888", V1: "/jwt/jsonInBlacklist", V2: "POST"},
 
 	{Ptype: "p", V0: "888", V1: "/dp/createDp", V2: "POST"},
 	{Ptype: "p", V0: "888", V1: "/dp/listDps", V2: "GET"},
