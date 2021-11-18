@@ -11,10 +11,11 @@ func InitDpRouter(Router *gin.RouterGroup) {
 	{
 		dp.GET("getDpDetail", v1.GetDpDetail)
 		dp.POST("createDp", v1.CreateDailyReport)
-		dp.PUT("updateDp", v1.UpdateDailyReport)
+		dp.PUT("updateDpDetail", v1.UpdateDailyReport)
 		dp.GET("listAllDps", v1.ListAllDailyReports)
-		dp.GET("listAllDpsSub", v1.ListAllDailyReportsUnderAdmin)
+		dp.GET("listAllDpsWithSuperUser", v1.ListAllDpsWithSuperUser)
 		dp.GET("listDps", v1.ListDps)
-		dp.DELETE("deleteDp", v1.DeleteDailyReport)
+		dp.DELETE("deleteDpById", v1.DeleteDailyReport)
+		dp.DELETE("deleteDpByUUIDs", v1.DeleteDailyReportByUUIds)
 	}
 }

@@ -21,7 +21,7 @@ func ListAllDailyReports(pageNum, pageSize int) (list interface{}, total int64, 
 	return dpList, total, err
 }
 
-func ListAllDailyReportsUnderAdmin(adminId uint, pageNum, pageSize int) (list interface{}, total int64, err error) {
+func ListAllDpsWithSuperUser(adminId uint, pageNum, pageSize int) (list interface{}, total int64, err error) {
 	var dpList []model.SysAdminDpMaps
 	limit := pageSize
 	offset := (pageNum - 1) * limit
@@ -58,6 +58,11 @@ func UpdateDailyReport(p *model.DpDp) (*model.DpDp, error) {
 func DeleteDailyReport(uuid string) error {
 	var dp model.DpDp
 	err := global.DB.Where("uuid = ?", uuid).Unscoped().Delete(&dp).Error
+	return err
+}
+
+func DeleteDailyReportByUUIds(uuids []string) error {
+	err := global.DB.Delete(&[]model.DpDp{}, "uuid in ?", uuids).Error
 	return err
 }
 

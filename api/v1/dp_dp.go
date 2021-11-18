@@ -9,6 +9,7 @@ import (
 	"github.com/drep/service"
 	"github.com/drep/utils"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func CreateDailyReport(c *gin.Context) {
@@ -69,12 +70,12 @@ func ListAllDailyReports(c *gin.Context) {
 	}
 }
 
-func ListAllDailyReportsUnderAdmin(c *gin.Context) {
+func ListAllDpsWithSuperUser(c *gin.Context) {
 	var total int64
 	adminId := getUserID(c)
 	pageNum, pageSize := utils.ParsePaginateParams(c)
 
-	list, total, err := service.ListAllDailyReportsUnderAdmin(adminId, pageNum, pageSize)
+	list, total, err := service.ListAllDpsWithSuperUser(adminId, pageNum, pageSize)
 	if err != nil {
 		response.FailWithMessage("failed to get all projects", c)
 	} else {
@@ -135,6 +136,22 @@ func DeleteDailyReport(c *gin.Context) {
 		errMsg := fmt.Sprintf("删除项目失败，错误：%s", err)
 		global.LOG.Info(errMsg)
 		response.FailWithMessage("删除项目失败", c)
+	} else {
+		response.Ok(c)
+	}
+}
+
+func DeleteDailyReportByUUIds(c *gin.Context) {
+	var reqUuid request.UuidsReq
+	_ = c.ShouldBindJSON(&reqUuid)
+	if len(reqUuid.Uuids) == 0 {
+		response.FailWithMessage("请指定uuid", c)
+		return
+	}
+	err := service.DeleteDailyReportByUUIds(reqUuid.Uuids)
+	if err != nil {
+		global.LOG.Info("批量删除日报失败", zap.Any("error:", err))
+		response.FailWithMessage("批量删除日报失败", c)
 	} else {
 		response.Ok(c)
 	}
