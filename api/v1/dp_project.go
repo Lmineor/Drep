@@ -139,3 +139,12 @@ func getStringUUIDFromPath(c *gin.Context) string {
 	uuid := c.Query("uuid")
 	return uuid
 }
+
+func ExportProjectXls(c *gin.Context) {
+	userId := getUserID(c)
+	list, _ := service.ListProjectsToExportExcel(userId)
+	headers := []string{"项目创建日期", "项目名称", "项目简介"}
+	utils.ToExcel2(c, headers, list)
+	//content := utils.ToExcel([]string{`创建日期`, `名称`, `简介`}, list)
+	//ResponseXls(c, content, "项目")
+}

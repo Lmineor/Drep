@@ -16,5 +16,6 @@ func InitProjectRouter(Router *gin.RouterGroup) {
 		project.GET("listProjects", v1.ListProjects)
 		project.DELETE("deleteProject", v1.DeleteProject)
 		project.DELETE("deleteProjectByUUIDs", v1.DeleteProjectByUUIDs)
+		project.GET("exportProjectXls", v1.ExportProjectXls)
 	}
 }

@@ -3,6 +3,7 @@ module github.com/drep
 go 1.16
 
 require (
+	github.com/360EntSecGroup-Skylar/excelize v1.4.1 // indirect
 	github.com/casbin/casbin/v2 v2.38.1
 	github.com/casbin/gorm-adapter/v3 v3.4.4
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -22,6 +23,7 @@ require (
 	github.com/shirou/gopsutil v3.21.10+incompatible // indirect
 	github.com/spf13/viper v1.9.0
 	github.com/swaggo/gin-swagger v1.3.2
+	github.com/tealeg/xlsx v1.0.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	go.uber.org/zap v1.19.1
 	gorm.io/driver/mysql v1.1.3

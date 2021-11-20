@@ -70,6 +70,8 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/project/listProjects", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/project/updateProject", V2: "PUT"},
 	{Ptype: "p", V0: "100", V1: "/project/deleteProject", V2: "DELETE"},
+	{Ptype: "p", V0: "100", V1: "/project/deleteProjectByUUIDs", V2: "DELETE"},
+	{Ptype: "p", V0: "100", V1: "/project/exportProjectXls", V2: "GET"},
 
 	{Ptype: "p", V0: "100", V1: "/dp/listAllDps", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/dp/createDp", V2: "POST"},
@@ -77,7 +79,8 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/dp/getDpDetail", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/dp/updateDpDetail", V2: "PUT"},
 	{Ptype: "p", V0: "100", V1: "/dp/deleteDp", V2: "DELETE"},
-
+	{Ptype: "p", V0: "100", V1: "/dp/deleteDpByUUIDs", V2: "DELETE"},
+	{Ptype: "p", V0: "100", V1: "/dp/exportDpXls", V2: "GET"},
 	// admin
 	{Ptype: "p", V0: "1001", V1: "/base/login", V2: "POST"},
 
@@ -104,6 +107,7 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "1001", V1: "/project/updateProject", V2: "PUT"},
 	{Ptype: "p", V0: "1001", V1: "/project/deleteProject", V2: "DELETE"},
 	{Ptype: "p", V0: "1001", V1: "/project/deleteProjectByUUIDs", V2: "DELETE"},
+	{Ptype: "p", V0: "1001", V1: "/project/exportProjectXls", V2: "GET"},
 
 	{Ptype: "p", V0: "1001", V1: "/dp/listAllDpsWithSuperUser", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/dp/createDp", V2: "POST"},
@@ -112,6 +116,7 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "1001", V1: "/dp/updateDpDetail", V2: "PUT"},
 	{Ptype: "p", V0: "1001", V1: "/dp/deleteDp", V2: "DELETE"},
 	{Ptype: "p", V0: "1001", V1: "/dp/deleteDpByUUIDs", V2: "DELETE"},
+	{Ptype: "p", V0: "1001", V1: "/dp/exportDpXls", V2: "GET"},
 
 	// user
 	{Ptype: "p", V0: "888", V1: "/base/login", V2: "POST"},

@@ -41,6 +41,25 @@ func ListProjects(userId uint, pageNum, pageSize int) (list interface{}, total i
 	return projectList, total, err
 }
 
+func ListProjectsToExportExcel(userId uint) (list []map[string]interface{}, err error) {
+	var projectList []model.DpProject
+
+	db := global.DB.Model(&model.DpProject{}).Where("user_id = ?", userId)
+	// TODO: solve this omit func.
+	err = db.Preload("User", func(db *gorm.DB) *gorm.DB {
+		return db.Omit("sys_users.header_img")
+	}).Find(&projectList).Error
+
+	for _, v := range projectList {
+		projectMap := make(map[string]interface{})
+		projectMap["项目名称"] = v.Name
+		projectMap["项目创建日期"] = v.CreatedAt
+		projectMap["项目简介"] = v.Description
+		list = append(list, projectMap)
+	}
+	return list, err
+}
+
 func ListAllProjects(pageNum, pageSize int) (list interface{}, total int64, err error) {
 	var projectList []model.DpProject
 	limit := pageSize
