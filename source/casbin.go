@@ -10,9 +10,9 @@ var Casbin = new(casbin)
 
 type casbin struct{}
 
-// 999: superAdmin
-// 888: admin
-// 777: user
+// 100: superAdmin
+// 1001: admin
+// 888: user
 
 var carbines = []gormadapter.CasbinRule{
 	// superAdmin

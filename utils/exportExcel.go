@@ -28,6 +28,7 @@ func ToExcel(c *gin.Context, filename string, headers []string, values []map[str
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", "attachment; filename="+filename)
 	c.Header("Content-Transfer-Encoding", "binary")
+	c.Header("Kong", "true")
 
 	//回写到web 流媒体 形成下载
 	_ = xlsx.Write(c.Writer)
