@@ -55,6 +55,7 @@ func ListProjectsToExportExcel(userId uint) (list []map[string]interface{}, err 
 		projectMap["项目名称"] = v.Name
 		projectMap["项目创建日期"] = v.CreatedAt
 		projectMap["项目简介"] = v.Description
+		projectMap["项目创建人"] = v.User.Username
 		list = append(list, projectMap)
 	}
 	return list, err

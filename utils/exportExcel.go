@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ToExcel2(c *gin.Context, headers []string, values []map[string]interface{}) {
+func ToExcel(c *gin.Context, filename string, headers []string, values []map[string]interface{}) {
 	xlsx := excelize.NewFile()
 	for k, v := range headers {
 		char := Div(k + 1)
@@ -17,8 +17,8 @@ func ToExcel2(c *gin.Context, headers []string, values []map[string]interface{})
 		row := i + 2 // 第一行为header行
 		for j := 0; j < len(headers); j++ {
 			col := j + 1
-			char := Div(col)
-			axis := fmt.Sprintf("%s%d", char, row)
+			colChar := Div(col)
+			axis := fmt.Sprintf("%s%d", colChar, row)
 			key := headers[j]
 			currentCellValue, _ := values[i][key]
 			xlsx.SetCellValue("Sheet1", axis, currentCellValue)
@@ -26,7 +26,7 @@ func ToExcel2(c *gin.Context, headers []string, values []map[string]interface{})
 	}
 
 	c.Header("Content-Type", "application/octet-stream")
-	c.Header("Content-Disposition", "attachment; filename="+"Workbook.xlsx")
+	c.Header("Content-Disposition", "attachment; filename="+filename)
 	c.Header("Content-Transfer-Encoding", "binary")
 
 	//回写到web 流媒体 形成下载

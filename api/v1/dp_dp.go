@@ -156,3 +156,12 @@ func DeleteDailyReportByUUIds(c *gin.Context) {
 		response.Ok(c)
 	}
 }
+
+func ExportDpXls(c *gin.Context) {
+	userId := getUserID(c)
+	list, _ := service.ListDpsToExportExcel(userId)
+	headers := []string{"填写日期", "标题", "内容", "项目名", "填写人"}
+
+	filename := fmt.Sprintf("%s%s.xlsx", utils.GetDateTimeStr(), "-export_daily_report")
+	utils.ToExcel(c, filename, headers, list)
+}

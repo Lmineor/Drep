@@ -17,5 +17,6 @@ func InitDpRouter(Router *gin.RouterGroup) {
 		dp.GET("listDps", v1.ListDps)
 		dp.DELETE("deleteDpById", v1.DeleteDailyReport)
 		dp.DELETE("deleteDpByUUIDs", v1.DeleteDailyReportByUUIds)
+		dp.GET("exportDpXls", v1.ExportDpXls)
 	}
 }

@@ -32,6 +32,23 @@ func ListAllDpsWithSuperUser(adminId uint, pageNum, pageSize int) (list interfac
 	return dpList, total, err
 }
 
+func ListDpsToExportExcel(userId uint) (list []map[string]interface{}, err error) {
+	var dpList []model.SysAdminDpMaps
+	db := global.DB.Model(&model.SysAdminDpMaps{}).Where("user_id = ?", userId)
+	err = db.Find(&dpList).Error
+
+	for _, v := range dpList {
+		singleDp := make(map[string]interface{})
+		singleDp["填写日期"] = v.CreatedAt
+		singleDp["标题"] = v.Title
+		singleDp["内容"] = v.Content
+		singleDp["项目名"] = v.PjName
+		singleDp["填写人"] = v.DpUsername + "(" + v.DpNickname + ")"
+		list = append(list, singleDp)
+	}
+	return
+}
+
 func ListDps(userID uint, pageNum, pageSize int) (list interface{}, total int64, err error) {
 	var dpList []model.DpDp
 	limit := pageSize
