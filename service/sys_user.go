@@ -67,7 +67,7 @@ func DeleteUser(uuid string) (err error) {
 	return err
 }
 
-func SetUserInfo(reqUser model.SysUser) (err error, user model.SysUser) {
+func SetUserInfo(reqUser *model.SysUser) (err error, user *model.SysUser) {
 	err = global.DB.Updates(&reqUser).Error
 	return err, reqUser
 }
@@ -102,4 +102,14 @@ func VerifyAuthorityIdExist(authorityId string) bool {
 		return false
 	}
 	return true
+}
+
+func ResetPassword(userId float64) (err error) {
+	var dbUser model.SysUser
+	if err = global.DB.Where("id = ?", userId).First(&dbUser).Error; err != nil {
+		return
+	}
+	dbUser.Password = utils.MD5V([]byte("123456"))
+	err = global.DB.Save(&dbUser).Error
+	return err
 }

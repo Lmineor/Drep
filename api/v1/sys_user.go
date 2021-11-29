@@ -23,8 +23,7 @@ func Login(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	//if store.Verify(l.CaptchaId, l.Captcha, true) {
-	if true {
+	if store.Verify(l.CaptchaId, l.Captcha, true) {
 		u := &model.SysUser{Username: l.Username, Password: l.Password}
 		if err, user := service.Login(u); err != nil {
 			global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
@@ -222,7 +221,7 @@ func SetUserInfo(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err, ReqUser := service.SetUserInfo(user); err != nil {
+	if err, ReqUser := service.SetUserInfo(&user); err != nil {
 		global.LOG.Error("设置失败!", zap.Any("err", err))
 		response.FailWithMessage("设置失败", c)
 	} else {
@@ -261,4 +260,14 @@ func getUserAuthorityId(c *gin.Context) string {
 		waitUse := claims.(*request.CustomClaims)
 		return waitUse.AuthorityId
 	}
+}
+
+func ResetPassword(c *gin.Context) {
+	var userId request.GetById
+	_ = c.ShouldBindJSON(&userId)
+	if err := service.ResetPassword(userId.ID); err != nil {
+		response.FailWithMessage("error", c)
+		return
+	}
+	response.Ok(c)
 }

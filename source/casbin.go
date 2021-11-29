@@ -16,6 +16,15 @@ type casbin struct{}
 
 var carbines = []gormadapter.CasbinRule{
 	// superAdmin
+	{Ptype: "p", V0: "100", V1: "/system/getSystemConfig", V2: "GET"},
+	{Ptype: "p", V0: "100", V1: "/system/setSystemConfig", V2: "PUT"},
+	{Ptype: "p", V0: "100", V1: "/system/getServerInfo", V2: "GET"},
+	{Ptype: "p", V0: "100", V1: "/system/reloadSystem", V2: "POST"},
+
+	{Ptype: "p", V0: "100", V1: "/fileUploadAndDownload/getFileList", V2: "GET"},
+	{Ptype: "p", V0: "100", V1: "/fileUploadAndDownload/deleteFile", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/fileUploadAndDownload/upload", V2: "POST"},
+
 	{Ptype: "p", V0: "100", V1: "/admin/createInviteCode", V2: "POST"},
 	{Ptype: "p", V0: "100", V1: "/admin/listAllInviteCode", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/admin/deleteInviteCode", V2: "DELETE"},
@@ -61,6 +70,9 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/user/getAllUserList", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/user/deleteUser", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/user/setUserInfo", V2: "PUT"},
+	{Ptype: "p", V0: "100", V1: "/user/changePassword", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/user/setUserAuthority", V2: "POST"},
+	{Ptype: "p", V0: "100", V1: "/user/resetUserPassword", V2: "POST"},
 
 	{Ptype: "p", V0: "100", V1: "/jwt/jsonInBlacklist", V2: "POST"},
 
@@ -98,6 +110,8 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "1001", V1: "/user/getUserList", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/user/deleteUser", V2: "GET"},
 	{Ptype: "p", V0: "1001", V1: "/user/setUserInfo", V2: "PUT"},
+	{Ptype: "p", V0: "1001", V1: "/user/changePassword", V2: "POST"},
+	{Ptype: "p", V0: "1001", V1: "/user/resetUserPassword", V2: "POST"},
 
 	{Ptype: "p", V0: "1001", V1: "/jwt/jsonInBlacklist", V2: "POST"},
 
@@ -121,6 +135,7 @@ var carbines = []gormadapter.CasbinRule{
 	// user
 	{Ptype: "p", V0: "888", V1: "/base/login", V2: "POST"},
 	{Ptype: "p", V0: "888", V1: "/user/setUserInfo", V2: "PUT"},
+	{Ptype: "p", V0: "888", V1: "/user/changePassword", V2: "POST"},
 
 	{Ptype: "p", V0: "888", V1: "/jwt/jsonInBlacklist", V2: "POST"},
 
