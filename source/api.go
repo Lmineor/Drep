@@ -94,7 +94,7 @@ var apis = []model.SysApi{
 //@description: sys_apis 表数据初始化
 func (a *api) Init() error {
 	return global.DB.Transaction(func(tx *gorm.DB) error {
-		if tx.Where("id IN ?", []int{1, 67}).Find(&[]model.SysApi{}).RowsAffected == 2 {
+		if tx.Where("id IN ?", []int{1, 86}).Find(&[]model.SysApi{}).RowsAffected == 2 {
 			global.LOG.Warn("\n[Mysql] --> sys_apis 表的初始数据已存在!")
 			return nil
 		}
