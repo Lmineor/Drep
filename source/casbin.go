@@ -90,7 +90,7 @@ var carbines = []gormadapter.CasbinRule{
 	{Ptype: "p", V0: "100", V1: "/dp/listDps", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/dp/getDpDetail", V2: "GET"},
 	{Ptype: "p", V0: "100", V1: "/dp/updateDpDetail", V2: "PUT"},
-	{Ptype: "p", V0: "100", V1: "/dp/deleteDp", V2: "DELETE"},
+	{Ptype: "p", V0: "100", V1: "/dp/deleteDpById", V2: "DELETE"},
 	{Ptype: "p", V0: "100", V1: "/dp/deleteDpByUUIDs", V2: "DELETE"},
 	{Ptype: "p", V0: "100", V1: "/dp/exportDpXls", V2: "GET"},
 	// admin
